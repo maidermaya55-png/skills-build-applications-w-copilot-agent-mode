@@ -4,6 +4,9 @@ const codespaceName = import.meta.env.VITE_CODESPACE_NAME
 const API_BASE_URL = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000'
+const ACTIVITIES_ENDPOINT = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
+  : `${API_BASE_URL}/api/activities/`
 
 function getItems(payload) {
   if (Array.isArray(payload)) return payload
@@ -15,7 +18,7 @@ function Activities() {
   const [status, setStatus] = useState('loading')
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/activities/`)
+    fetch(ACTIVITIES_ENDPOINT)
       .then((response) => {
         if (!response.ok) throw new Error('Unable to load activities')
         return response.json()
